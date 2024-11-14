@@ -139,59 +139,18 @@ A deficiency can lead to a range of symptoms and health issues, as seen in this 
 Zinc is important for growth and development, immune function, cognitive function, and the senses of taste and smell. It is also involved in the production of testosterone and other sex hormones, which explains the patient's hypogonadism. \
 Addressing the zinc deficiency through dietary changes and/or supplements, under medical supervision, can help alleviate these symptoms and improve the patient's overall health and stability."]
 basic_rag_answer = "The patient's symptoms indicate a zinc deficiency."
-# selected_question = st.selectbox('Select Query', qsts)
-# if st.button("Get Answer") and selected_question:
-#     with st.spinner("Retrieving context and generating answer..."):
-#         try:
-#             # Convert generated_answer to a single string if it is a list
-#             answer_text = " ".join(generated_answer)
-            
-#             # Split the text into sentences using regular expression
-#             sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', answer_text)
-            
-#             # Join sentences with <br> tags to create line breaks in Markdown
-#             formatted_answer = "<br>".join(sentences)
-            
-#             # Display the formatted answer in a styled container
-#             st.subheader("Generated Answer:")
-#             st.markdown(
-#                 f"""
-#                 <div style="background-color: #FFF6E3; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-#                     <p style="font-size: 16px; line-height: 1.6;">{formatted_answer}</p>
-#                 </div>
-#                 """,
-#                 unsafe_allow_html=True
-#             )
-#         except Exception as e:
-#             st.error(f"Error generating response: {e}")
-# answer_type = st.radio("Choose the type of answer to display:", ("Entity RAG Answer", "Basic RAG Answer"))
 
+
+# selected_question = qsts[0]
 # if st.button("Get Answer") and selected_question:
 #     with st.spinner("Retrieving context and generating answer..."):
+#         sleep(2)
 #         try:
-#             # Display the selected type of answer
-#             if answer_type == "Entity RAG Answer":
-#                 # Convert generated_answer to a single string if it is a list
-#                 answer_text = " ".join(generated_answer)
-                
-#                 # Split the text into sentences using regular expression
-#                 sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', answer_text)
-                
-#                 # Join sentences with <br> tags to create line breaks in Markdown
-#                 formatted_answer = "<br>".join(sentences)
-                
-#                 # Display the formatted answer in a styled container
-#                 st.subheader("Entity RAG Answer:")
-#                 st.markdown(
-#                     f"""
-#                     <div style="background-color: #FFF6E3; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-#                         <p style="font-size: 16px; line-height: 1.6;">{formatted_answer}</p>
-#                     </div>
-#                     """,
-#                     unsafe_allow_html=True
-#                 )
-#             elif answer_type == "Basic RAG Answer":
-#                 # Display the basic answer in a styled container
+#             # Column layout for displaying answers side by side
+#             col1, col2 = st.columns(2)
+
+#             # Display the Basic RAG Answer in the left column
+#             with col1:
 #                 st.subheader("Basic RAG Answer:")
 #                 st.markdown(
 #                     f"""
@@ -201,28 +160,46 @@ basic_rag_answer = "The patient's symptoms indicate a zinc deficiency."
 #                     """,
 #                     unsafe_allow_html=True
 #                 )
+
+#             # Convert generated_answer to a single string if it is a list
+#             answer_text = " ".join(generated_answer)
+
+#             # Split the text into sentences using regular expression
+#             sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', answer_text)
+
+#             # Join sentences with <br> tags to create line breaks in Markdown
+#             formatted_answer = "<br>".join(sentences)
+
+#             # Display the Entity RAG Answer in the right column
+#             with col2:
+#                 st.subheader("Entity RAG Answer:")
+#                 st.markdown(
+#                     f"""
+#                     <div style="background-color: #FFF6E3; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+#                         <p style="font-size: 16px; line-height: 1.6;">{formatted_answer}</p>
+#                     </div>
+#                     """,
+#                     unsafe_allow_html=True
+#                 )
 #         except Exception as e:
 #             st.error(f"Error generating response: {e}")
+
 
 selected_question = qsts[0]
 if st.button("Get Answer") and selected_question:
     with st.spinner("Retrieving context and generating answer..."):
         sleep(2)
         try:
-            # Column layout for displaying answers side by side
-            col1, col2 = st.columns(2)
-
-            # Display the Basic RAG Answer in the left column
-            with col1:
-                st.subheader("Basic RAG Answer:")
-                st.markdown(
-                    f"""
-                    <div style="background-color: #E3F2FF; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                        <p style="font-size: 16px; line-height: 1.6;">{basic_rag_answer}</p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+            # Display the Basic RAG Answer in the first row
+            st.subheader("Basic RAG Answer:")
+            st.markdown(
+                f"""
+                <div style="background-color: #E3F2FF; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+                    <p style="font-size: 16px; line-height: 1.6;">{basic_rag_answer}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
             # Convert generated_answer to a single string if it is a list
             answer_text = " ".join(generated_answer)
@@ -233,25 +210,19 @@ if st.button("Get Answer") and selected_question:
             # Join sentences with <br> tags to create line breaks in Markdown
             formatted_answer = "<br>".join(sentences)
 
-            # Display the Entity RAG Answer in the right column
-            with col2:
-                st.subheader("Entity RAG Answer:")
-                st.markdown(
-                    f"""
-                    <div style="background-color: #FFF6E3; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                        <p style="font-size: 16px; line-height: 1.6;">{formatted_answer}</p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+            # Display the Entity RAG Answer in the second row
+            st.subheader("Entity RAG Answer:")
+            st.markdown(
+                f"""
+                <div style="background-color: #FFF6E3; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+                    <p style="font-size: 16px; line-height: 1.6;">{formatted_answer}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
         except Exception as e:
             st.error(f"Error generating response: {e}")
-# container1 = st.container(border=True)
-# st.write(query_entities)
-# # with container1:
-# #     plot_education(selected_position)
-# container2 = st.container(border=True)
-# st.write(generated_answer)
+
 
 st.header("Medical NER")  
 def add_image(image_path: str, caption: str = "", width: int = 500):
