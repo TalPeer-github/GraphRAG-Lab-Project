@@ -184,7 +184,7 @@ if st.button("Get Answer") and selected_question:
             st.error(f"Error generating response: {e}")
 
 image3_file_path= "Streamlit/procp.png"
-add_image(image_file_path, caption="")
+add_image(image3_file_path, caption="")
 st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 st.markdown(
     "<hr style='border: none; border-top: 10px solid #FFC0CB; margin: 50px 0;'>",
