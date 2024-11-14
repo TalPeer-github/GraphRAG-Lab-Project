@@ -124,7 +124,7 @@ def display_html_file(file_path: str):
 
 # Example usage in your app
 st.header("Entity Graph")
-display_html_file("entity_graph.html")
+display_html_file("Streamlit/entity_graph.html")
 
 # Streamlit Interface Structure
 st.title("Medical QA System - RAG-based")
