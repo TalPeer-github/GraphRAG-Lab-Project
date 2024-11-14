@@ -109,6 +109,23 @@ def plot_entity_distribution():
     ax.set_title("Distribution of Key Medical Entities")
     st.pyplot(fig)
 
+
+def display_html_file(file_path: str):
+    """
+    Display the contents of an HTML file within the Streamlit app.
+    :param file_path: Path to the .html file to display.
+    """
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            html_content = f.read()
+        st.components.v1.html(html_content, height=600, scrolling=True)
+    except Exception as e:
+        st.error(f"Error loading HTML file: {e}")
+
+# Example usage in your app
+st.header("Entity Graph")
+display_html_file("entity_graph.html")
+
 # Streamlit Interface Structure
 st.title("Medical QA System - RAG-based")
 st.header("Accurate, Verified Answers for Healthcare")
