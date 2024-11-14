@@ -17,6 +17,24 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+def add_image(image_path: str, caption: str = "", width: int = 500):
+    """
+    Display an image in the Streamlit app.
+    
+    Args:
+        image_path (str): Path to the image file (e.g., "ner.png").
+        caption (str): Optional caption for the image.
+        width (int): Optional width of the image in pixels (default is 500).
+    """
+    try:
+        st.image(image_path, caption=caption, use_column_width=False, width=width)
+    except FileNotFoundError:
+        st.error(f"Image '{image_path}' not found. Please check the path and try again.")
+    except Exception as e:
+        st.error(f"Error displaying image: {e}")
+
+image2_file_path= "Streamlit/doc.jpeg"
+add_image(image2_file_path, caption="")
 
 # Sidebar with guidance and subject areas
 def display_question_tips():
@@ -188,25 +206,11 @@ def display_html_file(file_path: str):
         st.error(f"Error loading HTML file: {e}")
 
 
-def add_image(image_path: str, caption: str = "", width: int = 500):
-    """
-    Display an image in the Streamlit app.
-    
-    Args:
-        image_path (str): Path to the image file (e.g., "ner.png").
-        caption (str): Optional caption for the image.
-        width (int): Optional width of the image in pixels (default is 500).
-    """
-    try:
-        st.image(image_path, caption=caption, use_column_width=False, width=width)
-    except FileNotFoundError:
-        st.error(f"Image '{image_path}' not found. Please check the path and try again.")
-    except Exception as e:
-        st.error(f"Error displaying image: {e}")
-
 
 html_file_path= "Streamlit/entity_graph.html"
 image_file_path= "Streamlit/ner.png"
+image2_file_path= "Streamlit/doc.jpeg"
+add_image(image2_file_path, caption="")
 add_image(image_file_path, caption="Named Entity Recognition Visualization")
 st.header("The Entity Graph")        
 display_html_file(html_file_path)
