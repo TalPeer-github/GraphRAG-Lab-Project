@@ -76,10 +76,10 @@ def display_annotated_answer(answer, entities):
     st.markdown(highlighted_answer, unsafe_allow_html=True)
 
 
-# Entity Co-occurrence Graph
+
 def plot_entity_graph(entities):
     G = nx.Graph()
-    for _ in range(10):  # Sample pairings for demo
+    for _ in range(10):  
         entity1, entity2 = random.sample(entities, 2)
         G.add_edge(entity1[0], entity2[0])
 
@@ -98,7 +98,7 @@ def display_source_info():
         - **WHO**: Public health reports
     """)
 
-# Entity Frequency Visualization
+
 def plot_entity_distribution():
     entity_data = pd.DataFrame({
         "Entity Type": ["Disease", "Symptom", "Medication", "Anatomy"],
@@ -122,9 +122,7 @@ def display_html_file(file_path: str):
     except Exception as e:
         st.error(f"Error loading HTML file: {e}")
 
-# Example usage in your app
-st.header("Entity Graph")
-display_html_file("Streamlit/entity_graph.html")
+
 
 # Streamlit Interface Structure
 st.title("Medical QA System - RAG-based")
@@ -154,6 +152,8 @@ if st.button("Get Answer") and question:
 
 # Additional Information Section
 st.header("Additional Information")
+st.header("Entity Graph")
+display_html_file("Streamlit/entity_graph.html")
 display_source_info()
 plot_entity_distribution()
 plot_entity_graph(entities)
