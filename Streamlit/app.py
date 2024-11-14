@@ -148,7 +148,7 @@ A deficiency can lead to a range of symptoms and health issues, as seen in this 
 Zinc is important for growth and development, immune function, cognitive function, and the senses of taste and smell. It is also involved in the production of testosterone and other sex hormones, which explains the patient's hypogonadism. \
 Addressing the zinc deficiency through dietary changes and/or supplements, under medical supervision, can help alleviate these symptoms and improve the patient's overall health and stability."]
 basic_rag_answer = "The patient symptoms indicate Zinc virus."
-selected_question = st.selectbox('Select Query', qsts)
+# selected_question = st.selectbox('Select Query', qsts)
 # if st.button("Get Answer") and selected_question:
 #     with st.spinner("Retrieving context and generating answer..."):
 #         try:
@@ -173,7 +173,7 @@ selected_question = st.selectbox('Select Query', qsts)
 #             )
 #         except Exception as e:
 #             st.error(f"Error generating response: {e}")
-answer_type = st.radio("Choose the type of answer to display:", ("Entity RAG Answer", "Basic RAG Answer"))
+# answer_type = st.radio("Choose the type of answer to display:", ("Entity RAG Answer", "Basic RAG Answer"))
 
 # if st.button("Get Answer") and selected_question:
 #     with st.spinner("Retrieving context and generating answer..."):
