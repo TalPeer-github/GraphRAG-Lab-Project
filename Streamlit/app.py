@@ -128,7 +128,7 @@ display_subjects_covered()
 display_sample_questions()
 
 # Main Question Input and Output
-question = st.text_area("Insert query:", height=50)
+question = st.text_area("Insert query:", height=100)
 
 qsts = ["The patient suffered from hypogonadism, failure to thrive, loss of taste and unable to maintain stability. What is the deficiency it shows?"]
 query_entities = ['failure to thrive', 'loss of taste','hypogonadism']
