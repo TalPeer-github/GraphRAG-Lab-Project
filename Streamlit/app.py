@@ -147,7 +147,7 @@ A deficiency can lead to a range of symptoms and health issues, as seen in this 
 Zinc is important for growth and development, immune function, cognitive function, and the senses of taste and smell. It is also involved in the production of testosterone and other sex hormones, which explains the patient's hypogonadism. \
 Addressing the zinc deficiency through dietary changes and/or supplements, under medical supervision, can help alleviate these symptoms and improve the patient's overall health and stability."]
 selected_question = st.selectbox('Select Query', qsts)
-if st.button("Get Answer") and question:
+if st.button("Get Answer") and selected_question:
     with st.spinner("Retrieving context and generating answer..."):
         try:
             #retrieved_context, generated_answer, entities = generate_rag_response(question)
