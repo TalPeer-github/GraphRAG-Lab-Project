@@ -149,26 +149,26 @@ Addressing the zinc deficiency through dietary changes and/or supplements, under
 selected_question = st.selectbox('Select Query', qsts)
 if st.button("Get Answer") and selected_question:
     with st.spinner("Retrieving context and generating answer..."):
-           try:
-        # Convert generated_answer to a single string if it is a list
-        answer_text = " ".join(generated_answer)
-        
-        # Split the text into sentences using regular expression
-        sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', answer_text)
-        
-        # Join sentences with <br> tags to create line breaks in Markdown
-        formatted_answer = "<br>".join(sentences)
-        
-        # Display the formatted answer in a styled container
-        st.subheader("Generated Answer:")
-        st.markdown(
-            f"""
-            <div style="background-color: #FFF6E3; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                <p style="font-size: 16px; line-height: 1.6;">{formatted_answer}</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+        try:
+            # Convert generated_answer to a single string if it is a list
+            answer_text = " ".join(generated_answer)
+            
+            # Split the text into sentences using regular expression
+            sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', answer_text)
+            
+            # Join sentences with <br> tags to create line breaks in Markdown
+            formatted_answer = "<br>".join(sentences)
+            
+            # Display the formatted answer in a styled container
+            st.subheader("Generated Answer:")
+            st.markdown(
+                f"""
+                <div style="background-color: #FFF6E3; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+                    <p style="font-size: 16px; line-height: 1.6;">{formatted_answer}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
         except Exception as e:
             st.error(f"Error generating response: {e}")
 
