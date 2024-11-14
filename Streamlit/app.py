@@ -16,17 +16,6 @@ st.set_page_config(
 )
 
 
-# Sample RAG retrieval and generation function
-def generate_rag_response(question: str):
-    """
-    Placeholder function for the RAG model retrieval and generation.
-    Replace with your actual retrieval and generation logic.
-    """
-    retrieved_context = f"Sample retrieved context for the question: {question}"
-    generated_answer = f"Sample generated answer for the question: {question}"
-    entities = [("pain", "Symptom"), ("ibuprofen", "Medication"), ("hypertension", "Disease")]
-    return retrieved_context, generated_answer, entities
-
 # Sidebar with guidance and subject areas
 def display_question_tips():
     st.sidebar.subheader("Tips for Asking Effective Questions")
@@ -259,9 +248,29 @@ if st.button("Get Answer") and selected_question:
 # container2 = st.container(border=True)
 # st.write(generated_answer)
 
+st.header("Medical NER")  
+def add_image(image_path: str, caption: str = "", width: int = 500):
+    """
+    Display an image in the Streamlit app.
+    
+    Args:
+        image_path (str): Path to the image file (e.g., "ner.png").
+        caption (str): Optional caption for the image.
+        width (int): Optional width of the image in pixels (default is 500).
+    """
+    try:
+        st.image(image_path, caption=caption, use_column_width=False, width=width)
+    except FileNotFoundError:
+        st.error(f"Image '{image_path}' not found. Please check the path and try again.")
+    except Exception as e:
+        st.error(f"Error displaying image: {e}")
+
+# Example usag
 
 st.header("The Entity Graph")        
 html_file_path= "Streamlit/entity_graph.html"
+image_file_path= "Streamlit/ner.png"
+add_image(image_file_path, caption="Named Entity Recognition Visualization")
 display_html_file(html_file_path)
 
 display_source_info()
@@ -269,4 +278,5 @@ st.write("""
     This Medical QA system provides responses using reliable sources, helping medical professionals
     and students gain trustworthy insights.
 """)
+
 
