@@ -126,11 +126,11 @@ def display_html_file(file_path: str):
 
 
 # Streamlit Interface Structure
-st.title("Medical QA System - RAG-based")
+st.title("Entity-Based RAG")
 st.header("Accurate, Verified Answers for Healthcare")
 st.write("""
-    This QA system combines advanced language understanding with a curated knowledge base of verified medical sources,
-    providing reliable answers. Start by asking a question.
+    In this project, we aim to develop a medical entity-focused QA system centered around RAG to meet our specific
+use cases and address the challenges outlined above.
 """)
 
 # Sidebar Content
@@ -139,7 +139,7 @@ display_subjects_covered()
 display_sample_questions()
 
 # Main Question Input and Output
-#question = st.text_input("Enter your medical question here:")
+question = st.text_input(""The patient suffered from hypogonadism, failure to thrive, loss of taste and unable to maintain stability. What is the deficiency it shows?"")
 
 qsts = ["The patient suffered from hypogonadism, failure to thrive, loss of taste and unable to maintain stability. What is the deficiency it shows?"]
 query_entities = ['failure to thrive', 'loss of taste','hypogonadism']
@@ -182,17 +182,11 @@ if st.button("Get Answer") and selected_question:
 # st.write(generated_answer)
 
 
-        
+st.header("The Entity Graph")        
 html_file_path= "Streamlit/entity_graph.html"
 display_html_file(html_file_path)
 
-# Additional Information Section
-st.header("Additional Information")
-st.header("Entity Graph")
-
 display_source_info()
-#plot_entity_distribution()
-#plot_entity_graph(entities)
 st.write("""
     This Medical QA system provides responses using reliable sources, helping medical professionals
     and students gain trustworthy insights.
