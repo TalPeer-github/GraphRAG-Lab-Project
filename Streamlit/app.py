@@ -155,6 +155,15 @@ if st.button("Get Answer") and selected_question:
             #st.write(retrieved_context)
             st.write(generated_answer)
             #display_annotated_answer(generated_answer, query_entities)
+            st.subheader("Generated Answer:")
+            st.markdown(
+                f"""
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+                    <p style="font-size: 16px; line-height: 1.6;">{answer_text}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
         except Exception as e:
             st.error(f"Error generating response: {e}")
 
