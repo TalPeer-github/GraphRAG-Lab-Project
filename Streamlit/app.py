@@ -227,7 +227,7 @@ def enhance_entity_graph(html_file_path, query_entities):
 html_file_path= "Streamlit/entity_graph.html"
 
 querie = ["Symptoms includs hypogonadism, failure to thrive, loss of taste and unable to maintain stability. What is the deficiency it shows?"]
-query_entities = [('failure to thrive','Sign Symptoms'), ('loss of taste','Sign Symptoms'),('hypogonadism','DISEASE / DISORDER')]
+query_entities = ['failure to thrive', 'loss of taste','hypogonadism'] #[('failure to thrive','Sign Symptoms'), ('loss of taste','Sign Symptoms'),('hypogonadism','DISEASE / DISORDER')]
 enhance_entity_graph(html_file_path, query_entities)
 # Additional Information Section
 st.header("Additional Information")
