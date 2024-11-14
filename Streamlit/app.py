@@ -33,8 +33,7 @@ def add_image(image_path: str, caption: str = "", width: int = 500):
     except Exception as e:
         st.error(f"Error displaying image: {e}")
 
-image2_file_path= "Streamlit/doc.jpeg"
-add_image(image2_file_path, caption="")
+
 
 # Sidebar with guidance and subject areas
 def display_question_tips():
@@ -133,7 +132,8 @@ use cases and address the challenges outlined above.
 display_question_tips()
 display_subjects_covered()
 display_sample_questions()
-
+image2_file_path= "Streamlit/doc.jpeg"
+add_image(image2_file_path, caption="")
 #display_source_info()
 # Main Question Input and Output
 question = st.text_area("Insert query:", height=70)
@@ -209,8 +209,6 @@ def display_html_file(file_path: str):
 
 html_file_path= "Streamlit/entity_graph.html"
 image_file_path= "Streamlit/ner.png"
-image2_file_path= "Streamlit/doc.jpeg"
-add_image(image2_file_path, caption="")
 add_image(image_file_path, caption="Named Entity Recognition Visualization")
 st.header("The Entity Graph")        
 display_html_file(html_file_path)
