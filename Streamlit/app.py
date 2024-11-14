@@ -188,7 +188,7 @@ basic_rag_answer = "The patient's symptoms indicate a zinc deficiency."
 selected_question = qsts[0]
 if st.button("Get Answer") and selected_question:
     with st.spinner("Retrieving context and generating answer..."):
-        sleep(2)
+        sleep(3)
         try:
             # Display the Basic RAG Answer in the first row
             st.subheader("Basic RAG Answer:")
@@ -209,7 +209,7 @@ if st.button("Get Answer") and selected_question:
 
             # Join sentences with <br> tags to create line breaks in Markdown
             formatted_answer = "<br>".join(sentences)
-
+            sleep(1)
             # Display the Entity RAG Answer in the second row
             st.subheader("Entity RAG Answer:")
             st.markdown(
