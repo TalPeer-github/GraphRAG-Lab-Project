@@ -6,6 +6,7 @@ from transformers import pipeline
 import networkx as nx
 from pyvis.network import Network
 import random
+import re
 
 # Set page configuration
 st.set_page_config(
