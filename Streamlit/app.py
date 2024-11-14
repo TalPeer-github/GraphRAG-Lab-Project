@@ -129,6 +129,33 @@ display_question_tips()
 display_subjects_covered()
 display_sample_questions()
 
+
+st.header("Medical NER")  
+def add_image(image_path: str, caption: str = "", width: int = 500):
+    """
+    Display an image in the Streamlit app.
+    
+    Args:
+        image_path (str): Path to the image file (e.g., "ner.png").
+        caption (str): Optional caption for the image.
+        width (int): Optional width of the image in pixels (default is 500).
+    """
+    try:
+        st.image(image_path, caption=caption, use_column_width=False, width=width)
+    except FileNotFoundError:
+        st.error(f"Image '{image_path}' not found. Please check the path and try again.")
+    except Exception as e:
+        st.error(f"Error displaying image: {e}")
+
+# Example usag
+
+
+html_file_path= "Streamlit/entity_graph.html"
+image_file_path= "Streamlit/ner.png"
+add_image(image_file_path, caption="Named Entity Recognition Visualization")
+st.header("The Entity Graph")        
+display_html_file(html_file_path)
+#display_source_info()
 # Main Question Input and Output
 question = st.text_area("Insert query:", height=70)
 
@@ -224,32 +251,6 @@ if st.button("Get Answer") and selected_question:
             st.error(f"Error generating response: {e}")
 
 
-st.header("Medical NER")  
-def add_image(image_path: str, caption: str = "", width: int = 500):
-    """
-    Display an image in the Streamlit app.
-    
-    Args:
-        image_path (str): Path to the image file (e.g., "ner.png").
-        caption (str): Optional caption for the image.
-        width (int): Optional width of the image in pixels (default is 500).
-    """
-    try:
-        st.image(image_path, caption=caption, use_column_width=False, width=width)
-    except FileNotFoundError:
-        st.error(f"Image '{image_path}' not found. Please check the path and try again.")
-    except Exception as e:
-        st.error(f"Error displaying image: {e}")
-
-# Example usag
-
-
-html_file_path= "Streamlit/entity_graph.html"
-image_file_path= "Streamlit/ner.png"
-add_image(image_file_path, caption="Named Entity Recognition Visualization")
-st.header("The Entity Graph")        
-display_html_file(html_file_path)
-#display_source_info()
 st.write("""
     This Medical QA system provides responses using reliable sources, helping medical professionals
     and students gain trustworthy insights.
