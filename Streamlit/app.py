@@ -200,7 +200,7 @@ def display_html_file(file_path: str):
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             html_content = f.read()
-        st.components.v1.html(html_content, height=700,width=250,scrolling=True)
+        st.components.v1.html(html_content, height=800,width=800,scrolling=True)
     except Exception as e:
         st.error(f"Error loading HTML file: {e}")
 
