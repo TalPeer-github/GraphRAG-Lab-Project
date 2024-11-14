@@ -122,57 +122,47 @@ def display_html_file(file_path: str):
     except Exception as e:
         st.error(f"Error loading HTML file: {e}")
 
-def visualize_rag_retrieval_and_entity_matching(query, query_entities, top_relevant_docs):
+def visualize_enhanced_entity_graph(query_entities, top_relevant_docs):
     """
-    Visualize the RAG retrieval process and entity matching for the Streamlit app.
+    Visualize the enhanced entity graph, emphasizing entities found in the query.
     
     Args:
-        query (str): User query.
         query_entities (dict): Extracted entities from the query.
         top_relevant_docs (list): Top retrieved documents after filtering.
     """
-    # Step 1: Visualization of the retrieval process
-    st.header("1. Retrieval Process Visualization")
-    st.subheader(f"Query: {query}")
-    scores = [doc['score'] for doc in top_relevant_docs]
-    doc_ids = [doc['id'] for doc in top_relevant_docs]
-
-    # Plot retrieval scores
-    fig, ax = plt.subplots()
-    sns.barplot(x=doc_ids, y=scores, ax=ax)
-    ax.set_title("Top Relevant Document Scores")
-    ax.set_xlabel("Document ID")
-    ax.set_ylabel("Score")
-    ax.set_xticklabels(doc_ids, rotation=45)
-    st.pyplot(fig)
-
-    # Step 2: Visualization of entity extraction and matching
-    st.header("2. Entity Extraction and Matching Visualization")
-    st.write("Entities extracted from the query and matched entities in the retrieved documents:")
-
-    # Show extracted entities
-    for key, values in query_entities.items():
-        st.write(f"**{key}**: {values}")
-
-    # Entity matching graph
+    # Initialize a graph
     G = nx.Graph()
-    matched_entities = set()
 
-    # Add nodes and edges based on matched entities in retrieved docs
+    # Add nodes and edges for query entities
+    for entity_type, entities in query_entities.items():
+        if entities:
+            if not isinstance(entities, list):
+                entities = [entities]  # Ensure entities are in a list
+            for entity in entities:
+                G.add_node(entity, label=entity_type, color='red')  # Red color to emphasize query entities
+
+    # Add nodes and edges for entities in the retrieved documents
     for doc in top_relevant_docs:
         metadata = doc['metadata']
-        for key, value in metadata.items():
-            if key in query_entities:
-                matched_entities.add((value, key))
-                G.add_edge(query, value)
+        for key, values in metadata.items():
+            if not isinstance(values, list):
+                values = [values]
+            for value in values:
+                if (value, key) not in query_entities.items():  # Only add edges if it's not already added as a query entity
+                    G.add_node(value, label=key, color='blue')  # Blue for regular nodes
+                    for entity_type, entities in query_entities.items():
+                        if entities and value in entities:
+                            G.add_edge(value, entities[0])  # Connect matching query entities with blue nodes
 
-    # Plot the entity graph using networkx and pyvis
-    net = Network(height="500px", width="100%", bgcolor="#222222", font_color="white")
+    # Generate and display the graph using pyvis
+    net = Network(height="600px", width="100%", bgcolor="#222222", font_color="white")
     net.from_nx(G)
-    net.show("entity_matching_graph.html")
-    st.components.v1.html(open("entity_matching_graph.html", "r").read(), height=500)
-
-    #st.write("This visualization shows the relationships between the query and matched entities within the retrieved documents.")
+    net.show("entities_graph.html")
+    st.subheader("Enhanced Entity Graph Visualization")
+    try:
+        st.components.v1.html(open("entities_graph.html", "r").read(), height=600)
+    except Exception as e:
+        st.error(f"Error displaying graph: {e}")
 
 # Streamlit Interface Structure
 st.title("Medical QA System - RAG-based")
@@ -204,7 +194,7 @@ queries = ["Symptoms includs hypogonadism, failure to thrive, loss of taste and 
 query_entities = {'Sign Symptoms': ['failure to thrive', 'loss of taste'],'DISEASE / DISORDER': ['hypogonadism']}
 top_relevant_docs = [{'id': '1125', 'score': 0.937067, 'metadata': {'DISEASE_DISORDER': ['hypogonadism'], 'SIGN_SYMPTOM': ['failure to thrive', 'loss of taste'], 'text': 'The patient suffered from hypogonadism, failure to thrive, loss of taste and unable to maintain stability. This shows the deficiency of: Zinc. '}}]
 
-visualize_rag_retrieval_and_entity_matching(queries[0], query_entities, top_relevant_docs)
+visualize_enhanced_entity_graph(query_entities, top_relevant_docs)
 # Additional Information Section
 st.header("Additional Information")
 st.header("Entity Graph")
