@@ -116,7 +116,7 @@ def display_html_file(file_path: str):
 
 # Streamlit Interface Structure
 st.title("Entity-Based RAG")
-st.header("Accurate, Verified Answers for Healthcare")
+st.header("094295 - Final Project")
 st.write("""
     In this project, we aim to develop a medical entity-focused QA system centered around RAG to meet our specific
 use cases and address the challenges outlined above.
