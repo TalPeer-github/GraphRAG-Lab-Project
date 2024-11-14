@@ -144,50 +144,6 @@ Addressing the zinc deficiency through dietary changes and/or supplements, under
 basic_rag_answer = "The patient's symptoms indicate a zinc deficiency."
 
 
-# selected_question = qsts[0]
-# if st.button("Get Answer") and selected_question:
-#     with st.spinner("Retrieving context and generating answer..."):
-#         sleep(2)
-#         try:
-#             # Column layout for displaying answers side by side
-#             col1, col2 = st.columns(2)
-
-#             # Display the Basic RAG Answer in the left column
-#             with col1:
-#                 st.subheader("Basic RAG Answer:")
-#                 st.markdown(
-#                     f"""
-#                     <div style="background-color: #E3F2FF; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-#                         <p style="font-size: 16px; line-height: 1.6;">{basic_rag_answer}</p>
-#                     </div>
-#                     """,
-#                     unsafe_allow_html=True
-#                 )
-
-#             # Convert generated_answer to a single string if it is a list
-#             answer_text = " ".join(generated_answer)
-
-#             # Split the text into sentences using regular expression
-#             sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', answer_text)
-
-#             # Join sentences with <br> tags to create line breaks in Markdown
-#             formatted_answer = "<br>".join(sentences)
-
-#             # Display the Entity RAG Answer in the right column
-#             with col2:
-#                 st.subheader("Entity RAG Answer:")
-#                 st.markdown(
-#                     f"""
-#                     <div style="background-color: #FFF6E3; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-#                         <p style="font-size: 16px; line-height: 1.6;">{formatted_answer}</p>
-#                     </div>
-#                     """,
-#                     unsafe_allow_html=True
-#                 )
-#         except Exception as e:
-#             st.error(f"Error generating response: {e}")
-
-
 selected_question = qsts[0]
 if st.button("Get Answer") and selected_question:
     with st.spinner("Retrieving context and generating answer..."):
@@ -225,7 +181,10 @@ if st.button("Get Answer") and selected_question:
             )
         except Exception as e:
             st.error(f"Error generating response: {e}")
-
+st.markdown(
+    "<hr style='border: none; border-top: 3px solid #FFC0CB; margin: 20px 0;'>",
+    unsafe_allow_html=True
+)
 st.header("Medical NER")  
 def add_image(image_path: str, caption: str = "", width: int = 500):
     """
