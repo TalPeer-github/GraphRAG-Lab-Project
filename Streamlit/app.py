@@ -156,7 +156,7 @@ st.header("Entity Graph")
 display_html_file("Streamlit/entity_graph.html")
 display_source_info()
 plot_entity_distribution()
-plot_entity_graph(entities)
+#plot_entity_graph(entities)
 st.write("""
     This Medical QA system provides responses using reliable sources, helping medical professionals
     and students gain trustworthy insights.
