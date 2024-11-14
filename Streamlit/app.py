@@ -7,6 +7,8 @@ import networkx as nx
 from pyvis.network import Network
 import random
 import re
+from time import sleep
+
 
 # Set page configuration
 st.set_page_config(
