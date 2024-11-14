@@ -173,7 +173,7 @@ selected_question = st.selectbox('Select Query', qsts)
 #             )
 #         except Exception as e:
 #             st.error(f"Error generating response: {e}")
-# answer_type = st.radio("Choose the type of answer to display:", ("Entity RAG Answer", "Basic RAG Answer"))
+answer_type = st.radio("Choose the type of answer to display:", ("Entity RAG Answer", "Basic RAG Answer"))
 
 if st.button("Get Answer") and selected_question:
     with st.spinner("Retrieving context and generating answer..."):
