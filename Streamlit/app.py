@@ -14,6 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+
 # Sample RAG retrieval and generation function
 def generate_rag_response(question: str):
     """
@@ -123,44 +124,6 @@ def display_html_file(file_path: str):
         st.error(f"Error loading HTML file: {e}")
 
 
-def plot_enhanced_entity_graph(entities, query_entities):
-    """
-    Plot an enhanced entity graph with emphasis on query entities.
-    
-    Args:
-        entities (list): List of entities in the format [(entity_name, entity_type), ...].
-        query_entities (list): List of query entities to be highlighted in the graph.
-    """
-    G = nx.Graph()
-
-    # Create nodes and add edges randomly
-    for _ in range(min(10, len(entities))):  # Ensure we don't try more than available combinations
-        entity1, entity2 = random.sample(entities, 2)
-        G.add_edge(entity1[0], entity2[0])
-
-    # Add nodes for all entities, emphasizing query entities
-    for entity, entity_type in entities:
-        color = 'red' if entity in query_entities else 'green'  # Red for query entities, blue for others
-        G.add_node(entity, title=f"{entity} ({entity_type})", color=color)
-
-    # Create and render the graph using pyvis
-    net = Network(height="400px", width="100%", bgcolor="#222222", font_color="white")
-    net.from_nx(G)
-    html_file_path = "entity_graph.html"
-    net.write_html(html_file_path)
-
-    # Display in Streamlit
-    st.subheader("Enhanced Entity Graph")
-    try:
-        with open(html_file_path, "r") as f:
-            st.components.v1.html(f.read(), height=400)
-    except Exception as e:
-        st.error(f"Error displaying graph: {e}")
-
-
-
-
-
 # Streamlit Interface Structure
 st.title("Medical QA System - RAG-based")
 st.header("Accurate, Verified Answers for Healthcare")
@@ -175,67 +138,50 @@ display_subjects_covered()
 display_sample_questions()
 
 # Main Question Input and Output
-question = st.text_input("Enter your medical question here:")
+#question = st.text_input("Enter your medical question here:")
 
+qsts = ["The patient suffered from hypogonadism, failure to thrive, loss of taste and unable to maintain stability. What is the deficiency it shows?"]
+query_entities = ['failure to thrive', 'loss of taste','hypogonadism']
+generated_answer = ["The patient's symptoms of hypogonadism, failure to thrive, loss of taste, and instability indicate a zinc deficiency.\nZinc is an essential trace mineral that plays a crucial role in various physiological processes in the body.\n\
+A deficiency can lead to a range of symptoms and health issues, as seen in this patient. \
+Zinc is important for growth and development, immune function, cognitive function, and the senses of taste and smell. It is also involved in the production of testosterone and other sex hormones, which explains the patient's hypogonadism. \
+Addressing the zinc deficiency through dietary changes and/or supplements, under medical supervision, can help alleviate these symptoms and improve the patient's overall health and stability."]
+selected_question = st.selectbox('Select Query', qsts)
 if st.button("Get Answer") and question:
     with st.spinner("Retrieving context and generating answer..."):
         try:
-            retrieved_context, generated_answer, entities = generate_rag_response(question)
-            st.subheader("Supporting Medical Knowledge")
-            st.write(retrieved_context)
-            display_annotated_answer(generated_answer, entities)
+            #retrieved_context, generated_answer, entities = generate_rag_response(question)
+            #st.subheader("Supporting Medical Knowledge")
+            #st.write(retrieved_context)
+            display_annotated_answer(generated_answer, query_entities)
         except Exception as e:
             st.error(f"Error generating response: {e}")
 
-from bs4 import BeautifulSoup
 
-def enhance_entity_graph(html_file_path, query_entities):
-    """
-    Enhance the visualization of entities in an existing HTML file by highlighting specific query entities.
-    
-    Args:
-        html_file_path (str): Path to the HTML file containing the entity graph.
-        query_entities (list): List of entities to highlight in the graph.
-    """
-    try:
-        # Read the existing HTML content
-        with open(html_file_path, "r", encoding="utf-8") as f:
-            html_content = f.read()
+container1 = st.container(border=True)
+st.write(query_entities)
+# with container1:
+#     plot_education(selected_position)
+container2 = st.container(border=True)
+st.write(generated_answer)
+# with container2:
+#     plot_skills(selected_position)
+# container3 = st.container(border=True)
+# st.write(position_summaries[selected_position]['experience_summary'])
+# with container3:
+#     plot_experience(selected_position)
 
-        # Parse the HTML content using BeautifulSoup
-        soup = BeautifulSoup(html_content, 'html.parser')
-
-        # Find and enhance nodes in the graph (specific to pyvis structure)
-        for node in soup.find_all("div", class_="node"):
-            node_title = node.get("title", "")
-            if any(query_entity in node_title for query_entity in query_entities):
-                # Apply custom styles (e.g., change color or border) to highlight nodes
-                node["style"] = "background-color: red; border: 2px solid yellow;"
-
-        # Convert modified HTML content back to string
-        enhanced_html = str(soup)
-
-        # Display the enhanced HTML in Streamlit
-        st.subheader("Enhanced Entity Graph with Highlighted Query Entities")
-        st.components.v1.html(enhanced_html, height=600)
-
-    except FileNotFoundError:
-        st.error("The specified HTML file was not found.")
-    except Exception as e:
-        st.error(f"An error occurred while enhancing the entity graph: {e}")
         
 html_file_path= "Streamlit/entity_graph.html"
 
-querie = ["Symptoms includs hypogonadism, failure to thrive, loss of taste and unable to maintain stability. What is the deficiency it shows?"]
-query_entities = ['failure to thrive', 'loss of taste','hypogonadism'] #[('failure to thrive','Sign Symptoms'), ('loss of taste','Sign Symptoms'),('hypogonadism','DISEASE / DISORDER')]
-enhance_entity_graph(html_file_path, query_entities)
+
 # Additional Information Section
 st.header("Additional Information")
 st.header("Entity Graph")
 
 display_source_info()
-plot_entity_distribution()
-#plot_entity_graph(entities)
+#plot_entity_distribution()
+plot_entity_graph(entities)
 st.write("""
     This Medical QA system provides responses using reliable sources, helping medical professionals
     and students gain trustworthy insights.
