@@ -122,51 +122,44 @@ def display_html_file(file_path: str):
     except Exception as e:
         st.error(f"Error loading HTML file: {e}")
 
-def visualize_enhanced_entity_graph(query_entities, top_relevant_docs):
+
+def plot_enhanced_entity_graph(entities, query_entities):
     """
-    Visualize the enhanced entity graph, emphasizing entities found in the query.
+    Plot an enhanced entity graph with emphasis on query entities.
     
     Args:
-        query_entities (dict): Extracted entities from the query.
-        top_relevant_docs (list): Top retrieved documents after filtering.
+        entities (list): List of entities in the format [(entity_name, entity_type), ...].
+        query_entities (list): List of query entities to be highlighted in the graph.
     """
-    # Initialize a graph
     G = nx.Graph()
 
-    # Add nodes and edges for query entities
-    for entity_type, entities in query_entities.items():
-        if entities:
-            if not isinstance(entities, list):
-                entities = [entities]  # Ensure entities are in a list
-            for entity in entities:
-                G.add_node(entity, label=entity_type, color='red')  # Red color to emphasize query entities
+    # Create nodes and add edges randomly
+    for _ in range(min(10, len(entities))):  # Ensure we don't try more than available combinations
+        entity1, entity2 = random.sample(entities, 2)
+        G.add_edge(entity1[0], entity2[0])
 
-    # Add nodes and edges for entities in the retrieved documents
-    for doc in top_relevant_docs:
-        metadata = doc['metadata']
-        for key, values in metadata.items():
-            if not isinstance(values, list):
-                values = [values]
-            for value in values:
-                if (value, key) not in query_entities.items():  # Only add edges if it's not already added as a query entity
-                    G.add_node(value, label=key, color='blue')  # Blue for regular nodes
-                    for entity_type, entities in query_entities.items():
-                        if entities and value in entities:
-                            G.add_edge(value, entities[0])  # Connect matching query entities with blue nodes
+    # Add nodes for all entities, emphasizing query entities
+    for entity, entity_type in entities:
+        color = 'red' if entity in query_entities else 'green'  # Red for query entities, blue for others
+        G.add_node(entity, title=f"{entity} ({entity_type})", color=color)
 
-    # Generate and display the graph using pyvis
-    net = Network(height="600px", width="100%", bgcolor="#222222", font_color="white")
+    # Create and render the graph using pyvis
+    net = Network(height="400px", width="100%", bgcolor="#222222", font_color="white")
     net.from_nx(G)
-    html_file_path = "entities_graph.html"
-    net.write_html(html_file_path)  # Save the graph to an HTML file
-    
+    html_file_path = "entity_graph.html"
+    net.write_html(html_file_path)
+
     # Display in Streamlit
-    st.subheader("Enhanced Entity Graph Visualization")
+    st.subheader("Enhanced Entity Graph")
     try:
         with open(html_file_path, "r") as f:
-            st.components.v1.html(f.read(), height=600)
+            st.components.v1.html(f.read(), height=400)
     except Exception as e:
         st.error(f"Error displaying graph: {e}")
+
+
+
+
 
 # Streamlit Interface Structure
 st.title("Medical QA System - RAG-based")
@@ -193,12 +186,49 @@ if st.button("Get Answer") and question:
             display_annotated_answer(generated_answer, entities)
         except Exception as e:
             st.error(f"Error generating response: {e}")
-display_html_file("Streamlit/entity_graph.html")
-queries = ["Symptoms includs hypogonadism, failure to thrive, loss of taste and unable to maintain stability. What is the deficiency it shows?"]
-query_entities = {'Sign Symptoms': ['failure to thrive', 'loss of taste'],'DISEASE / DISORDER': ['hypogonadism']}
-top_relevant_docs = [{'id': '1125', 'score': 0.937067, 'metadata': {'DISEASE_DISORDER': ['hypogonadism'], 'SIGN_SYMPTOM': ['failure to thrive', 'loss of taste'], 'text': 'The patient suffered from hypogonadism, failure to thrive, loss of taste and unable to maintain stability. This shows the deficiency of: Zinc. '}}]
 
-visualize_enhanced_entity_graph(query_entities, top_relevant_docs)
+from bs4 import BeautifulSoup
+
+def enhance_entity_graph(html_file_path, query_entities):
+    """
+    Enhance the visualization of entities in an existing HTML file by highlighting specific query entities.
+    
+    Args:
+        html_file_path (str): Path to the HTML file containing the entity graph.
+        query_entities (list): List of entities to highlight in the graph.
+    """
+    try:
+        # Read the existing HTML content
+        with open(html_file_path, "r", encoding="utf-8") as f:
+            html_content = f.read()
+
+        # Parse the HTML content using BeautifulSoup
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        # Find and enhance nodes in the graph (specific to pyvis structure)
+        for node in soup.find_all("div", class_="node"):
+            node_title = node.get("title", "")
+            if any(query_entity in node_title for query_entity in query_entities):
+                # Apply custom styles (e.g., change color or border) to highlight nodes
+                node["style"] = "background-color: red; border: 2px solid yellow;"
+
+        # Convert modified HTML content back to string
+        enhanced_html = str(soup)
+
+        # Display the enhanced HTML in Streamlit
+        st.subheader("Enhanced Entity Graph with Highlighted Query Entities")
+        st.components.v1.html(enhanced_html, height=600)
+
+    except FileNotFoundError:
+        st.error("The specified HTML file was not found.")
+    except Exception as e:
+        st.error(f"An error occurred while enhancing the entity graph: {e}")
+        
+html_file_path= "Streamlit/entity_graph.html"
+
+querie = ["Symptoms includs hypogonadism, failure to thrive, loss of taste and unable to maintain stability. What is the deficiency it shows?"]
+query_entities = [('failure to thrive','Sign Symptoms'), ('loss of taste','Sign Symptoms'),('hypogonadism','DISEASE / DISORDER')]
+enhance_entity_graph(html_file_path, query_entities)
 # Additional Information Section
 st.header("Additional Information")
 st.header("Entity Graph")
