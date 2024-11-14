@@ -153,27 +153,23 @@ if st.button("Get Answer") and question:
             #retrieved_context, generated_answer, entities = generate_rag_response(question)
             #st.subheader("Supporting Medical Knowledge")
             #st.write(retrieved_context)
-            display_annotated_answer(generated_answer, query_entities)
+            st.write(generated_answer)
+            #display_annotated_answer(generated_answer, query_entities)
         except Exception as e:
             st.error(f"Error generating response: {e}")
 
 
-container1 = st.container(border=True)
-st.write(query_entities)
-# with container1:
-#     plot_education(selected_position)
-container2 = st.container(border=True)
-st.write(generated_answer)
-# with container2:
-#     plot_skills(selected_position)
-# container3 = st.container(border=True)
-# st.write(position_summaries[selected_position]['experience_summary'])
-# with container3:
-#     plot_experience(selected_position)
+# container1 = st.container(border=True)
+# st.write(query_entities)
+# # with container1:
+# #     plot_education(selected_position)
+# container2 = st.container(border=True)
+# st.write(generated_answer)
+
 
         
 html_file_path= "Streamlit/entity_graph.html"
-
+display_html_file(html_file_path)
 
 # Additional Information Section
 st.header("Additional Information")
@@ -181,7 +177,7 @@ st.header("Entity Graph")
 
 display_source_info()
 #plot_entity_distribution()
-plot_entity_graph(entities)
+#plot_entity_graph(entities)
 st.write("""
     This Medical QA system provides responses using reliable sources, helping medical professionals
     and students gain trustworthy insights.
