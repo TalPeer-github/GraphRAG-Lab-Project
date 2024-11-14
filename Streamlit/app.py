@@ -267,13 +267,13 @@ def add_image(image_path: str, caption: str = "", width: int = 500):
 
 # Example usag
 
-st.header("The Entity Graph")        
+
 html_file_path= "Streamlit/entity_graph.html"
 image_file_path= "Streamlit/ner.png"
 add_image(image_file_path, caption="Named Entity Recognition Visualization")
+st.header("The Entity Graph")        
 display_html_file(html_file_path)
-
-display_source_info()
+#display_source_info()
 st.write("""
     This Medical QA system provides responses using reliable sources, helping medical professionals
     and students gain trustworthy insights.
