@@ -212,9 +212,3 @@ add_image(image_file_path, caption="Named Entity Recognition Visualization")
 st.header("The Entity Graph")        
 display_html_file(html_file_path)
 
-st.write("""
-    This Medical QA system provides responses using reliable sources, helping medical professionals
-    and students gain trustworthy insights.
-""")
-
-
