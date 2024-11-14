@@ -172,6 +172,7 @@ st.markdown(
     "<hr style='border: none; border-top: 10px solid #FFC0CB; margin: 50px 0;'>",
     unsafe_allow_html=True
 )
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 st.header("Medical NER") 
 
 
@@ -203,8 +204,6 @@ def add_image(image_path: str, caption: str = "", width: int = 500):
         st.error(f"Image '{image_path}' not found. Please check the path and try again.")
     except Exception as e:
         st.error(f"Error displaying image: {e}")
-
-# Example usag
 
 
 html_file_path= "Streamlit/entity_graph.html"
