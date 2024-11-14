@@ -103,19 +103,6 @@ def plot_entity_distribution():
     st.pyplot(fig)
 
 
-def display_html_file(file_path: str):
-    """
-    Display the contents of an HTML file within the Streamlit app.
-    :param file_path: Path to the .html file to display.
-    """
-    try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            html_content = f.read()
-        st.components.v1.html(html_content, height=600, scrolling=True)
-    except Exception as e:
-        st.error(f"Error loading HTML file: {e}")
-
-
 # Streamlit Interface Structure
 st.title("Entity-Based RAG")
 st.header("094295 - Final Project")
@@ -182,10 +169,25 @@ if st.button("Get Answer") and selected_question:
         except Exception as e:
             st.error(f"Error generating response: {e}")
 st.markdown(
-    "<hr style='border: none; border-top: 3px solid #FFC0CB; margin: 20px 0;'>",
+    "<hr style='border: none; border-top: 10px solid #FFC0CB; margin: 50px 0;'>",
     unsafe_allow_html=True
 )
-st.header("Medical NER")  
+st.header("Medical NER") 
+
+
+def display_html_file(file_path: str):
+    """
+    Display the contents of an HTML file within the Streamlit app.
+    :param file_path: Path to the .html file to display.
+    """
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            html_content = f.read()
+        st.components.v1.html(html_content, height=600, scrolling=True)
+    except Exception as e:
+        st.error(f"Error loading HTML file: {e}")
+
+
 def add_image(image_path: str, caption: str = "", width: int = 500):
     """
     Display an image in the Streamlit app.
