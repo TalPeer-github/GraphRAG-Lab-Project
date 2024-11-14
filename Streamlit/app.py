@@ -168,6 +168,7 @@ if st.button("Get Answer") and selected_question:
             )
         except Exception as e:
             st.error(f"Error generating response: {e}")
+st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 st.markdown(
     "<hr style='border: none; border-top: 10px solid #FFC0CB; margin: 50px 0;'>",
     unsafe_allow_html=True
