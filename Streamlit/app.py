@@ -201,8 +201,11 @@ basic_rag_answer = "The patient's symptoms indicate a zinc deficiency."
 #                 )
 #         except Exception as e:
 #             st.error(f"Error generating response: {e}")
+
+selected_question = qsts[0]
 if st.button("Get Answer") and selected_question:
     with st.spinner("Retrieving context and generating answer..."):
+        sleep(2)
         try:
             # Column layout for displaying answers side by side
             col1, col2 = st.columns(2)
