@@ -116,8 +116,6 @@ display_question_tips()
 display_subjects_covered()
 display_sample_questions()
 
-
-
 #display_source_info()
 # Main Question Input and Output
 question = st.text_area("Insert query:", height=70)
@@ -129,7 +127,6 @@ A deficiency can lead to a range of symptoms and health issues, as seen in this 
 Zinc is important for growth and development, immune function, cognitive function, and the senses of taste and smell. It is also involved in the production of testosterone and other sex hormones, which explains the patient's hypogonadism. \
 Addressing the zinc deficiency through dietary changes and/or supplements, under medical supervision, can help alleviate these symptoms and improve the patient's overall health and stability."]
 basic_rag_answer = "The patient's symptoms indicate a zinc deficiency."
-
 
 selected_question = qsts[0]
 if st.button("Get Answer") and selected_question:
@@ -168,6 +165,7 @@ if st.button("Get Answer") and selected_question:
             )
         except Exception as e:
             st.error(f"Error generating response: {e}")
+            
 st.markdown("<div style='margin: 40px 0;'></div>", unsafe_allow_html=True)
 st.markdown(
     "<hr style='border: none; border-top: 10px solid #FFC0CB; margin: 50px 0;'>",
