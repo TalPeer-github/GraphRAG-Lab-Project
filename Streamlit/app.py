@@ -157,10 +157,14 @@ def visualize_enhanced_entity_graph(query_entities, top_relevant_docs):
     # Generate and display the graph using pyvis
     net = Network(height="600px", width="100%", bgcolor="#222222", font_color="white")
     net.from_nx(G)
-    net.show("entities_graph.html")
+    html_file_path = "entities_graph.html"
+    net.write_html(html_file_path)  # Save the graph to an HTML file
+    
+    # Display in Streamlit
     st.subheader("Enhanced Entity Graph Visualization")
     try:
-        st.components.v1.html(open("entities_graph.html", "r").read(), height=600)
+        with open(html_file_path, "r") as f:
+            st.components.v1.html(f.read(), height=600)
     except Exception as e:
         st.error(f"Error displaying graph: {e}")
 
@@ -189,7 +193,7 @@ if st.button("Get Answer") and question:
             display_annotated_answer(generated_answer, entities)
         except Exception as e:
             st.error(f"Error generating response: {e}")
-
+display_html_file("Streamlit/entity_graph.html")
 queries = ["Symptoms includs hypogonadism, failure to thrive, loss of taste and unable to maintain stability. What is the deficiency it shows?"]
 query_entities = {'Sign Symptoms': ['failure to thrive', 'loss of taste'],'DISEASE / DISORDER': ['hypogonadism']}
 top_relevant_docs = [{'id': '1125', 'score': 0.937067, 'metadata': {'DISEASE_DISORDER': ['hypogonadism'], 'SIGN_SYMPTOM': ['failure to thrive', 'loss of taste'], 'text': 'The patient suffered from hypogonadism, failure to thrive, loss of taste and unable to maintain stability. This shows the deficiency of: Zinc. '}}]
@@ -198,7 +202,7 @@ visualize_enhanced_entity_graph(query_entities, top_relevant_docs)
 # Additional Information Section
 st.header("Additional Information")
 st.header("Entity Graph")
-display_html_file("Streamlit/entity_graph.html")
+
 display_source_info()
 plot_entity_distribution()
 #plot_entity_graph(entities)
