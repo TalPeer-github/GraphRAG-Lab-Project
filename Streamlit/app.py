@@ -119,15 +119,15 @@ def plot_entity_distribution():
     ax.set_title("Distribution of Key Medical Entities")
     st.pyplot(fig)
 
-
+image2_file_path= "Streamlit/doc.jpeg"
+add_image(image2_file_path, caption="")
 # Streamlit Interface Structure
 st.title("Entity-Based RAG")
 # Sidebar Content
 display_question_tips()
 display_subjects_covered()
 display_sample_questions()
-image2_file_path= "Streamlit/doc.jpeg"
-add_image(image2_file_path, caption="")
+
 st.header("094295 - Final Project")
 st.write("""
     In this project, we aim to develop a medical entity-focused QA system centered around RAG to meet our specific
