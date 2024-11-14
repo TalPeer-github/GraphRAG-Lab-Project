@@ -10,7 +10,7 @@ import re
 
 # Set page configuration
 st.set_page_config(
-    page_title="Medical QA - Reliable Answers for Healthcare",
+    page_title="Entity-based RAG",
     page_icon="💉",
     initial_sidebar_state="expanded"
 )
@@ -136,7 +136,7 @@ generated_answer = ["The patient's symptoms of hypogonadism, failure to thrive, 
 A deficiency can lead to a range of symptoms and health issues, as seen in this patient. \
 Zinc is important for growth and development, immune function, cognitive function, and the senses of taste and smell. It is also involved in the production of testosterone and other sex hormones, which explains the patient's hypogonadism. \
 Addressing the zinc deficiency through dietary changes and/or supplements, under medical supervision, can help alleviate these symptoms and improve the patient's overall health and stability."]
-basic_rag_answer = "The patient symptoms indicate Zinc virus."
+basic_rag_answer = "The patient's symptoms indicate a zinc deficiency."
 # selected_question = st.selectbox('Select Query', qsts)
 # if st.button("Get Answer") and selected_question:
 #     with st.spinner("Retrieving context and generating answer..."):
